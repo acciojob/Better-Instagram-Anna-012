@@ -4,27 +4,26 @@
     <title>Hello, World!</title>
     <link rel="stylesheet" href="styles.css" />
     <style>
-      body{
+      body {
         display: flex;
         justify-content: center;
         align-content: center;
         height: 100vh;
         background-color: lightcoral;
       }
-      
-      
-      .grid{
+
+      .grid {
         display: grid;
-        grid-template-columns: repeat(6,150px);
-        gap:5px;
+        grid-template-columns: repeat(6, 150px);
+        gap: 5px;
       }
-      
-      .draggable{
+
+      .draggable {
         width: 70px;
         height: 350px;
         background-size: cover;
         border: 2px solid black;
-        transition:border 0.3s;
+        transition: border 0.3s;
       }
       #div1 { background-image: url('https://images.pexels.com/photos/414612/pexels-photo-414612.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'); }
       #div2 { background-image: url('https://plus.unsplash.com/premium_photo-1729542103282-87a286ae45fd?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMHx8fGVufDB8fHx8fA%3D%3D'); }
@@ -32,18 +31,49 @@
       #div4 { background-image: url('https://www.shutterstock.com/shutterstock/photos/1032541603/display_1500/stock-photo-the-young-and-conceptual-image-of-a-large-stone-in-the-shape-of-the-human-brain-1032541603.jpg'); }
       #div5 { background-image: url('https://www.befunky.com/images/prismic/1f427434-7ca0-46b2-b5d1-7d31843859b6_funky-focus-red-flower-field-after.jpeg?auto=avif,webp&format=jpg&width=863'); }
       #div6 { background-image: url('https://miro.medium.com/v2/resize:fit:1024/1*w7fSHgKimriL-ryZJ52Uig.png'); }
-
     </style>
   </head>
   <body>
-      <div class="grid">
-        <div id="div1" class="draggable" draggable="true"></div>
-        <div id="div2" class="draggable" draggable="true"></div>
-        <div id="div3" class="draggable" draggable="true"></div>
-        <div id="div4" class="draggable" draggable="true"></div>
-        <div id="div5" class="draggable" draggable="true"></div>
-        <div id="div6" class="draggable" draggable="true"></div>
-      </div>
-      <script src="script.js"></script>
+    <div class="grid">
+      <div id="div1" class="draggable" draggable="true"></div>
+      <div id="div2" class="draggable" draggable="true"></div>
+      <div id="div3" class="draggable" draggable="true"></div>
+      <div id="div4" class="draggable" draggable="true"></div>
+      <div id="div5" class="draggable" draggable="true"></div>
+      <div id="div6" class="draggable" draggable="true"></div>
+    </div>
+    <script>
+      const draggables = document.querySelectorAll('.draggable');
+
+      draggables.forEach((draggable) => {
+        draggable.addEventListener('dragstart', dragstart);
+        draggable.addEventListener('dragover', dragover);
+        draggable.addEventListener('drop', drop);
+      });
+
+      function dragstart(e) {
+        e.dataTransfer.setData('text/plain', e.target.id);
+      }
+
+      function dragover(event) {
+        event.preventDefault(); // Necessary to allow dropping
+      }
+
+      function drop(event) {
+        event.preventDefault();
+        const id = event.dataTransfer.getData('text/plain');
+        const draggable = document.getElementById(id); // Image being dragged
+
+        const targetElement = event.target; // Target image
+        if (targetElement.classList.contains('draggable')) {
+          const draggedImage = draggable.style.backgroundImage;
+          const targetImage = targetElement.style.backgroundImage;
+
+          // Swap images
+          draggable.style.backgroundImage = targetImage;
+          targetElement.style.backgroundImage = draggedImage;
+        }
+      }
+    </script>
   </body>
 </html>
