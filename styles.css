@@ -1,0 +1,23 @@
+   body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: lavenderblush;
+            flex-wrap: wrap;
+        }
+
+        .container{
+            width: 150px;
+            height: 150px;
+            border: 2px solid white;
+            margin: 10px;
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+        .draggable{
+            cursor: move;
+            width: 100%;
+            height: auto;
+        }
