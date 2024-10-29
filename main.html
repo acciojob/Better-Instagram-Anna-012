@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        body{
+        body {
             display: flex;
             justify-content: center;
             align-items: center;
@@ -14,66 +14,82 @@
             flex-wrap: wrap;
         }
 
-        .container{
+        .container {
             width: 150px;
             height: 150px;
             border: 2px solid white;
             margin: 10px;
             display: flex;
             justify-content: center;
+            align-items: center;
             position: relative;
-        }
-        .draggable{
             cursor: move;
-            width: 100%;
-            height: auto;
+        }
+
+        /* Assign unique background images to each container */
+        #div1 {
+            background-image: url('https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg');
+            background-size: cover;
+        }
+
+        #div2 {
+            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-C_UAhXq9GfuGO452EEzfbKnh1viQB9EDBQ&s');
+            background-size: cover;
+        }
+
+        #div3 {
+            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBD_rOB19y9Uq-TdyNSfoZB8pTdFY5csJF5A&s');
+            background-size: cover;
+        }
+
+        #div4 {
+            background-image: url('https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg');
+            background-size: cover;
+        }
+
+        #div5 {
+            background-image: url('https://img.freepik.com/free-photo/abstract-autumn-beauty-multi-colored-leaf-vein-pattern-generated-by-ai_188544-9871.jpg');
+            background-size: cover;
+        }
+
+        #div6 {
+            background-image: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBD_rOB19y9Uq-TdyNSfoZB8pTdFY5csJF5A&s');
+            background-size: cover;
         }
 
     </style>
 </head>
 <body>
     <div class="flex" id="parent">
-        <div draggable="true" class="container"  ondrop="drop(event)" ondragover="allowDrop(event)">
-        <img src="https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg" draggable="true" class="draggable" ondragstart="drag(event)">
-      </div>
-      <div draggable="true" class="container"  ondrop="drop(event)" ondragover="allowDrop(event)">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-C_UAhXq9GfuGO452EEzfbKnh1viQB9EDBQ&s" draggable="true" class="draggable" ondragstart="drag(event)">
-      </div>
-      <div draggable="true" class="container"  ondrop="drop(event)" ondragover="allowDrop(event)">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBD_rOB19y9Uq-TdyNSfoZB8pTdFY5csJF5A&s" draggable="true" class="draggable" ondragstart="drag(event)">
-      </div>
-      <div draggable="true" class="container"  ondrop="drop(event)" ondragover="allowDrop(event)">
-        <img src="https://letsenhance.io/static/8f5e523ee6b2479e26ecc91b9c25261e/1015f/MainAfter.jpg" draggable="true" class="draggable" ondragstart="drag(event)">
-      </div>
-      <div draggable="true" class="container"  ondrop="drop(event)" ondragover="allowDrop(event)">
-        <img src="https://img.freepik.com/free-photo/abstract-autumn-beauty-multi-colored-leaf-vein-pattern-generated-by-ai_188544-9871.jpg" draggable="true" class="draggable" ondragstart="drag(event)">
-      </div>
-      <div draggable="true" class="container"  ondrop="drop(event)" ondragover="allowDrop(event)">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBD_rOB19y9Uq-TdyNSfoZB8pTdFY5csJF5A&s" draggable="true" class="draggable" ondragstart="drag(event)">
-      </div>
+        <div id="div1" class="container" ondrop="drop(event)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)"></div>
+        <div id="div2" class="container" ondrop="drop(event)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)"></div>
+        <div id="div3" class="container" ondrop="drop(event)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)"></div>
+        <div id="div4" class="container" ondrop="drop(event)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)"></div>
+        <div id="div5" class="container" ondrop="drop(event)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)"></div>
+        <div id="div6" class="container" ondrop="drop(event)" ondragover="allowDrop(event)" draggable="true" ondragstart="drag(event)"></div>
     </div>
 </body>
 <script>
+    let draggedElement = null;
 
-    let draggedImage = null;
-    function allowDrop(event){
+    function allowDrop(event) {
         event.preventDefault();
     }
-    function drag(event){
-        draggedImage = event.target;
+
+    function drag(event) {
+        draggedElement = event.target;
     }
 
-    function drop(event){
+    function drop(event) {
         event.preventDefault();
-        const targetContainer = event.currentTarget;
+        const targetElement = event.currentTarget;
 
-       if(targetContainer !== draggedImage.parentElement){
-        const targetImage = targetContainer.querySelector('img');
-
-        const tempSrc = targetImage.src;
-        targetImage.src = draggedImage.src;
-        draggedImage.src = tempSrc;
-       }
+        // Swap background images if the dragged element is different from the target
+        if (targetElement !== draggedElement) {
+            const tempBackground = targetElement.style.backgroundImage;
+            targetElement.style.backgroundImage = draggedElement.style.backgroundImage;
+            draggedElement.style.backgroundImage = tempBackground;
+        }
     }
 </script>
 </html>
